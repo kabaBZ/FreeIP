@@ -1,6 +1,9 @@
 import requests
+import os
 
-XT_Token = "dpkkUtf7euD4GRM7kqrWJegNS"
+XT_Token = os.environ.get("XT_Token")
+if not XT_Token:
+    raise Exception("系统变量中不存在虾推Token!")
 
 
 class XiaTuiAlert(object):

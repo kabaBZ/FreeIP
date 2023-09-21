@@ -19,6 +19,7 @@
 # print("Operation done successfully")
 # conn.close()
 from redis import Redis
+import json
 
 
 class RedisProfile(object):
@@ -36,7 +37,24 @@ class RedisOpration(DBOpration):
         super().__init__()
         self.conn = Redis(host=profile.host, port=profile.port)
 
+    def redis_data_2_dict(self, data):
+        return json.loads(data.decode("utf-8"))
+
+    def dict_2_redis_data(self, data):
+        return json.dumps(data, ensure_ascii=False)
+
     def sadd(self, key, value):
         if self.conn.sadd(key, value):
             return True
         return False
+
+    def smembers(self, key):
+        data_list = self.conn.smembers(key)
+        return [self.redis_data_2_dict(data) for data in data_list]
+
+    def srem(self, key, value):
+        data = self.dict_2_redis_data(value)
+        return self.conn.srem(key, data)
+
+    def scard(self, key):
+        return self.conn.scard(key)
