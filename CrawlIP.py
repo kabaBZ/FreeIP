@@ -10,7 +10,8 @@ from workers.KuaiIP import KuaiIPCrawler
 from workers.SeoFangFa import SeoFangFaCrawler
 from workers.ZhanDaYe import ZhanDaYeCrawler
 
-if __name__ == "__main__":
+
+def run():
     token = ArgsParser(sys.argv[1:])
     if token:
         os.environ["XT_Token"] = token
@@ -25,3 +26,7 @@ if __name__ == "__main__":
     KuaiIPCrawler().main()
     ZhanDaYeCrawler().main()
     check_proxy()
+
+
+if __name__ == "__main__":
+    run()
