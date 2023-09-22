@@ -1,7 +1,8 @@
-import requests
-from common.IPCrawler import BaseIPCrawler, IP
-from common.IPStation import FateZero
 import json
+
+import requests
+from common.IPCrawler import IP, BaseIPCrawler
+from common.IPStation import FateZero
 
 
 class FateZeroCrawler(BaseIPCrawler):

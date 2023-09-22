@@ -1,10 +1,11 @@
-from abc import abstractmethod
-import requests
-from requests.exceptions import ProxyError, Timeout
-import traceback
 import json
+import traceback
+from abc import abstractmethod
+
+import requests
 from common.AlertUtils import XiaTuiAlert
 from common.DBUtils import RedisOpration, RedisProfile
+from requests.exceptions import ProxyError, Timeout
 
 
 class IP(object):

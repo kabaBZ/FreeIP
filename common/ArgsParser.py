@@ -2,8 +2,8 @@
 # -*- coding: UTF-8 -*-
 
 
-import sys
 import getopt
+import sys
 
 
 def ArgsParser(argv):

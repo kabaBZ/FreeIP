@@ -1,13 +1,14 @@
+import os
+import sys
+
+from common.ArgsParser import ArgsParser
+from common.IPChecker import check_proxy
+from common.IPCrawler import IP
 from workers.FateZero import FateZeroCrawler
 from workers.IP3366 import IP3366Crawler
-from workers.SeoFangFa import SeoFangFaCrawler
 from workers.KuaiIP import KuaiIPCrawler
+from workers.SeoFangFa import SeoFangFaCrawler
 from workers.ZhanDaYe import ZhanDaYeCrawler
-from common.IPCrawler import IP
-from common.IPChecker import check_proxy
-from common.ArgsParser import ArgsParser
-import sys
-import os
 
 if __name__ == "__main__":
     token = ArgsParser(sys.argv[1:])

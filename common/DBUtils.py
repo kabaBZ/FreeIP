@@ -9,6 +9,8 @@
 # )
 # print("Opened database successfully")
 
+import json
+
 # cur = conn.cursor()
 # cur.execute("SELECT name, threshhold0, threshhold1  from sjy_aqi_threshhold")
 # rows = cur.fetchall()
@@ -19,7 +21,6 @@
 # print("Operation done successfully")
 # conn.close()
 from redis import Redis
-import json
 
 
 class RedisProfile(object):
