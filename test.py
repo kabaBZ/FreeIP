@@ -1,8 +1,9 @@
 import json
 
 import requests
-from common.DBUtils import RedisOpration, RedisProfile
+
 from common.IPCrawler import IP, BaseIPCrawler
+from Utils.DBUtils import RedisOpration, RedisProfile
 
 if __name__ == "__main__":
     # print(

@@ -1,14 +1,12 @@
-import copy
 import datetime
-import random
 import time
 from copy import deepcopy
 
 import requests
+from lxml import etree
+
 from common.IPCrawler import IP, BaseIPCrawler
 from common.IPStation import ZhanDaYe
-from lxml import etree
-from redis import Redis
 
 
 class ZhanDaYeCrawler(BaseIPCrawler):

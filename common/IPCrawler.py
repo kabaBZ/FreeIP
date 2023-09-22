@@ -3,9 +3,10 @@ import traceback
 from abc import abstractmethod
 
 import requests
-from common.AlertUtils import XiaTuiAlert
-from common.DBUtils import RedisOpration, RedisProfile
 from requests.exceptions import ProxyError, Timeout
+
+from Utils.AlertUtils import XiaTuiAlert
+from Utils.DBUtils import RedisOpration, RedisProfile
 
 
 class IP(object):

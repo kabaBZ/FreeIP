@@ -1,8 +1,8 @@
 import json
 
-from common.AlertUtils import XiaTuiAlert
-from common.DBUtils import RedisOpration, RedisProfile
 from common.IPCrawler import IP, BaseIPCrawler
+from Utils.AlertUtils import XiaTuiAlert
+from Utils.DBUtils import RedisOpration, RedisProfile
 
 
 def check_proxy():
