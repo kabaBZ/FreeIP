@@ -3,8 +3,8 @@ import random
 import requests
 from lxml import etree
 
-from common.IPCrawler import IP, BaseIPCrawler
-from common.IPStation import KuaiIP
+from FreeIP.common.IPCrawler import IP, BaseIPCrawler
+from FreeIP.common.IPStation import KuaiIP
 
 
 class KuaiIPCrawler(BaseIPCrawler):

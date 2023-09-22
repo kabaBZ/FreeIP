@@ -1,14 +1,14 @@
 import os
 import sys
 
-from common.ArgsParser import ArgsParser
-from common.IPChecker import check_proxy
-from common.IPCrawler import IP
-from workers.FateZero import FateZeroCrawler
-from workers.IP3366 import IP3366Crawler
-from workers.KuaiIP import KuaiIPCrawler
-from workers.SeoFangFa import SeoFangFaCrawler
-from workers.ZhanDaYe import ZhanDaYeCrawler
+from .common.ArgsParser import ArgsParser
+from .common.IPChecker import check_proxy
+from .common.IPCrawler import IP
+from .workers.FateZero import FateZeroCrawler
+from .workers.IP3366 import IP3366Crawler
+from .workers.KuaiIP import KuaiIPCrawler
+from .workers.SeoFangFa import SeoFangFaCrawler
+from .workers.ZhanDaYe import ZhanDaYeCrawler
 
 
 def run():

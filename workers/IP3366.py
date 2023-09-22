@@ -1,8 +1,8 @@
 import requests
 from lxml import etree
 
-from common.IPCrawler import IP, BaseIPCrawler
-from common.IPStation import IP3366
+from FreeIP.common.IPCrawler import IP, BaseIPCrawler
+from FreeIP.common.IPStation import IP3366
 
 
 class IP3366Crawler(BaseIPCrawler):
