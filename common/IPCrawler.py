@@ -115,23 +115,30 @@ class BaseIPCrawler(object):
         pass
 
     def main(self):
-        self.ip_list = self.get_proxy_list()
-        updated_proxy = []
-        msg = ""
-        for ip in self.ip_list:
-            if self.test_ip(ip):
-                updated_proxy.append(ip)
-                msg += f"<br>{str(ip)}"
-                RedisOpration(RedisProfile).sadd(
-                    "proxy_test", json.dumps(ip.ip_info, ensure_ascii=False)
-                )
-                continue
-                # todo
-                self.save_to_db(ip)
+        try:
+            self.ip_list = self.get_proxy_list()
+            updated_proxy = []
+            msg = ""
+            for ip in self.ip_list:
+                if self.test_ip(ip):
+                    updated_proxy.append(ip)
+                    msg += f"<br>{str(ip)}"
+                    RedisOpration(RedisProfile).sadd(
+                        "proxy_test", json.dumps(ip.ip_info, ensure_ascii=False)
+                    )
+                    continue
+                    # todo
+                    self.save_to_db(ip)
 
-        XiaTuiAlert.send(
-            title=f"本次{self.__class__.__name__}任务共更新{len(updated_proxy)}条数据", msg=msg
-        )
+            XiaTuiAlert.send(
+                title=f"本次{self.__class__.__name__}任务共更新{len(updated_proxy)}条数据",
+                msg=msg,
+            )
+        except Exception:
+            XiaTuiAlert.send(
+                title=f"本次{self.__class__.__name__}失败，原因： {traceback.format_exc()}",
+                msg=msg,
+            )
 
 
 if __name__ == "__main__":
