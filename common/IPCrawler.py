@@ -117,32 +117,30 @@ class BaseIPCrawler(object):
 
     def main(self):
         try:
-            if str(datetime.datetime.now().date()) not in RedisOpration(
-                RedisProfile
-            ).smembers(self.__name__):
-                self.ip_list = self.get_proxy_list()
-                updated_proxy = []
-                msg = ""
-                for ip in self.ip_list:
-                    if self.test_ip(ip):
-                        updated_proxy.append(ip)
-                        msg += f"<br>{str(ip)}"
-                        RedisOpration(RedisProfile).sadd(
-                            "proxy_test", json.dumps(ip.ip_info, ensure_ascii=False)
-                        )
-                        continue
-                        # todo
-                        self.save_to_db(ip)
-
+            msg = ""
+            if not RedisOpration(RedisProfile).sadd(
+                self.__class__.__name__, str(datetime.datetime.now().date())
+            ):
+                return
+            self.ip_list = self.get_proxy_list()
+            updated_proxy = []
+            for ip in self.ip_list:
+                if not self.test_ip(ip):
+                    continue
+                updated_proxy.append(ip)
+                msg += f"<br>{str(ip)}"
                 RedisOpration(RedisProfile).sadd(
-                    self.__name__, str(datetime.datetime.now().date())
+                    "proxy_test", json.dumps(ip.ip_info, ensure_ascii=False)
                 )
 
-                XiaTuiAlert.send(
-                    title=f"本次{self.__class__.__name__}任务共更新{len(updated_proxy)}条数据",
-                    msg=msg,
-                )
+            XiaTuiAlert.send(
+                title=f"本次{self.__class__.__name__}任务共更新{len(updated_proxy)}条数据",
+                msg=msg,
+            )
         except Exception:
+            RedisOpration(RedisProfile).srem(
+                self.__class__.__name__, str(datetime.datetime.now().date())
+            )
             XiaTuiAlert.send(
                 title=f"本次{self.__class__.__name__}失败，原因： {traceback.format_exc()}",
                 msg=msg,

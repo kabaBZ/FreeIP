@@ -1,4 +1,5 @@
 import json
+import datetime
 
 from FreeIP.common.IPCrawler import IP, BaseIPCrawler
 from FreeIP.Utils.AlertUtils import XiaTuiAlert
@@ -6,6 +7,10 @@ from FreeIP.Utils.DBUtils import RedisOpration, RedisProfile
 
 
 def check_proxy():
+    # if not RedisOpration(RedisProfile).sadd(
+    #     "check_proxy", str(datetime.datetime.now().date())
+    # ):
+    #     return
     redis = RedisOpration(RedisProfile)
     proxy_list = redis.smembers("proxy_test")
 
