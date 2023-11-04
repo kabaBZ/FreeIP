@@ -4,6 +4,7 @@ from abc import abstractmethod
 
 import requests
 from requests.exceptions import ProxyError, Timeout
+import datetime
 
 from Utils.AlertUtils import XiaTuiAlert
 from Utils.DBUtils import RedisOpration, RedisProfile
@@ -116,24 +117,31 @@ class BaseIPCrawler(object):
 
     def main(self):
         try:
-            self.ip_list = self.get_proxy_list()
-            updated_proxy = []
-            msg = ""
-            for ip in self.ip_list:
-                if self.test_ip(ip):
-                    updated_proxy.append(ip)
-                    msg += f"<br>{str(ip)}"
-                    RedisOpration(RedisProfile).sadd(
-                        "proxy_test", json.dumps(ip.ip_info, ensure_ascii=False)
-                    )
-                    continue
-                    # todo
-                    self.save_to_db(ip)
+            if str(datetime.datetime.now().date()) not in RedisOpration(
+                RedisProfile
+            ).smembers(self.__name__):
+                self.ip_list = self.get_proxy_list()
+                updated_proxy = []
+                msg = ""
+                for ip in self.ip_list:
+                    if self.test_ip(ip):
+                        updated_proxy.append(ip)
+                        msg += f"<br>{str(ip)}"
+                        RedisOpration(RedisProfile).sadd(
+                            "proxy_test", json.dumps(ip.ip_info, ensure_ascii=False)
+                        )
+                        continue
+                        # todo
+                        self.save_to_db(ip)
 
-            XiaTuiAlert.send(
-                title=f"本次{self.__class__.__name__}任务共更新{len(updated_proxy)}条数据",
-                msg=msg,
-            )
+                RedisOpration(RedisProfile).sadd(
+                    self.__name__, str(datetime.datetime.now().date())
+                )
+
+                XiaTuiAlert.send(
+                    title=f"本次{self.__class__.__name__}任务共更新{len(updated_proxy)}条数据",
+                    msg=msg,
+                )
         except Exception:
             XiaTuiAlert.send(
                 title=f"本次{self.__class__.__name__}失败，原因： {traceback.format_exc()}",
